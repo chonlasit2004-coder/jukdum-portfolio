@@ -30,6 +30,12 @@ const LOADING_LINES = [
   "> SYSTEM STATUS: ONLINE"
 ];
 
+// ฟังก์ชันแปลงลิงก์ Google Drive ให้เป็นลิงก์สำหรับฝัง (Embed) วิดีโอโดยเฉพาะ
+const getEmbedUrl = (url) => {
+  if (!url) return "";
+  return url.replace(/\/view.*$/, "/preview");
+};
+
 function ScrollReveal({ children }) {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
@@ -121,39 +127,27 @@ export default function Home() {
         <div className="shooting-star star-5"></div>
       </div>
 
-      {/* 📺 หน้าต่าง Pop-up สำหรับดูวิดีโอ (สมบูรณ์แบบทั้งมือถือและ PC) */}
+      {/* 📺 หน้าต่าง Pop-up สำหรับดูวิดีโอ (อัปเกรดเพื่อมือถือและคอมพิวเตอร์) */}
       {selectedVideo && (
         <div 
           style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.95)', backdropFilter: 'blur(10px)', zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '1rem' }} 
           onClick={() => setSelectedVideo(null)}
         >
-          {/* แถบปุ่มด้านบนเครื่องเล่น จำกัดความกว้างให้เท่ากับวิดีโอ */}
-          <div style={{ width: '100%', maxWidth: '450px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }} onClick={(e) => e.stopPropagation()}>
+          {/* แถบปุ่มด้านบนเครื่องเล่น */}
+          <div style={{ width: '100%', maxWidth: '380px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }} onClick={(e) => e.stopPropagation()}>
             <a href={selectedVideo.link} target="_blank" rel="noreferrer" style={{ color: '#050806', textDecoration: 'none', background: '#34d399', padding: '8px 16px', borderRadius: '8px', fontSize: '0.9rem', fontWeight: 'bold' }}>
-              🔗 เปิดใน Google Drive
+              🔗 ดูวิดีโอแบบเต็มจอ
             </a>
             <button onClick={() => setSelectedVideo(null)} style={{ background: 'transparent', color: '#fff', border: 'none', fontSize: '1.2rem', cursor: 'pointer', padding: '8px' }}>
               ✖ ปิด
             </button>
           </div>
 
-          {/* กรอบวิดีโอ ล็อคสัดส่วน 9:16 และจำกัดความกว้างในคอม */}
-          <div 
-            style={{ 
-              width: '100%', 
-              maxWidth: '450px', /* <--- จำกัดให้พอดีบน PC ไม่ให้จอใหญ่เกินไป */
-              aspectRatio: '9/16', 
-              overflow: 'hidden', 
-              borderRadius: '12px',
-              backgroundColor: '#000' 
-            }} 
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div style={{ width: '100%', maxWidth: '380px', maxHeight: '75vh', aspectRatio: '9/16', overflow: 'hidden', borderRadius: '12px', backgroundColor: '#000', boxShadow: '0 20px 50px rgba(0,0,0,0.8)' }}>
             <iframe 
-              /* แปลงลิงก์จาก /view เป็น /preview อัตโนมัติเพื่อให้ Google Drive อนุญาตให้ฝังได้ */
-              src={selectedVideo.link.replace(/\/view.*/, '/preview')} 
+              src={getEmbedUrl(selectedVideo.link)} 
               style={{ width: '100%', height: '100%', border: 'none' }} 
-              allow="autoplay"
+              allow="autoplay; encrypted-media"
               allowFullScreen 
             />
           </div>
