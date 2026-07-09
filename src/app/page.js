@@ -121,28 +121,39 @@ export default function Home() {
         <div className="shooting-star star-5"></div>
       </div>
 
-      {/* 📺 หน้าต่าง Pop-up สำหรับดูวิดีโอ (อัปเกรดเพื่อมือถือ) */}
+      {/* 📺 หน้าต่าง Pop-up สำหรับดูวิดีโอ (สมบูรณ์แบบทั้งมือถือและ PC) */}
       {selectedVideo && (
         <div 
           style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.95)', backdropFilter: 'blur(10px)', zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '1rem' }} 
           onClick={() => setSelectedVideo(null)}
         >
-          {/* แถบปุ่มด้านบนเครื่องเล่น */}
-          <div style={{ width: '100%', maxWidth: '850px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }} onClick={(e) => e.stopPropagation()}>
+          {/* แถบปุ่มด้านบนเครื่องเล่น จำกัดความกว้างให้เท่ากับวิดีโอ */}
+          <div style={{ width: '100%', maxWidth: '450px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }} onClick={(e) => e.stopPropagation()}>
             <a href={selectedVideo.link} target="_blank" rel="noreferrer" style={{ color: '#050806', textDecoration: 'none', background: '#34d399', padding: '8px 16px', borderRadius: '8px', fontSize: '0.9rem', fontWeight: 'bold' }}>
-              🔗 ดูวิดีโอแบบเต็มจอ
+              🔗 เปิดใน Google Drive
             </a>
             <button onClick={() => setSelectedVideo(null)} style={{ background: 'transparent', color: '#fff', border: 'none', fontSize: '1.2rem', cursor: 'pointer', padding: '8px' }}>
               ✖ ปิด
             </button>
           </div>
 
-          <div style={{ width: '100%', maxWidth: '850px', aspectRatio: '16/9', background: '#111', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(52, 211, 153, 0.3)', boxShadow: '0 0 50px rgba(16, 185, 129, 0.2)' }} onClick={(e) => e.stopPropagation()}>
+          {/* กรอบวิดีโอ ล็อคสัดส่วน 9:16 และจำกัดความกว้างในคอม */}
+          <div 
+            style={{ 
+              width: '100%', 
+              maxWidth: '450px', /* <--- จำกัดให้พอดีบน PC ไม่ให้จอใหญ่เกินไป */
+              aspectRatio: '9/16', 
+              overflow: 'hidden', 
+              borderRadius: '12px',
+              backgroundColor: '#000' 
+            }} 
+            onClick={(e) => e.stopPropagation()}
+          >
             <iframe 
-              width="100%" height="100%" 
-              src={selectedVideo.link.replace('/view?usp=drive_link', '/preview')} 
-              frameBorder="0" 
-              allow="autoplay; fullscreen; picture-in-picture" 
+              /* แปลงลิงก์จาก /view เป็น /preview อัตโนมัติเพื่อให้ Google Drive อนุญาตให้ฝังได้ */
+              src={selectedVideo.link.replace(/\/view.*/, '/preview')} 
+              style={{ width: '100%', height: '100%', border: 'none' }} 
+              allow="autoplay"
               allowFullScreen 
             />
           </div>
