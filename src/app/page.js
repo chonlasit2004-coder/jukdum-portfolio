@@ -137,13 +137,16 @@ export default function Home() {
             </button>
           </div>
 
-          <div style={{ width: '100%', maxWidth: '850px', aspectRatio: '16/9', background: '#111', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(52, 211, 153, 0.3)', boxShadow: '0 0 50px rgba(16, 185, 129, 0.2)' }} onClick={(e) => e.stopPropagation()}>
+          <div style={{ width: '100%', aspectRatio: '9/16', /* สำคัญมาก: ล็อคสัดส่วนให้เป็นแนวตั้งแบบ Reels/TikTok */overflow: 'hidden', borderRadius: '12px',backgroundColor: '#000' /* ใส่พื้นหลังสีดำกันขอบขาว */}}>
             <iframe 
-              width="100%" height="100%" 
-              src={selectedVideo.link.replace('/view?usp=drive_link', '/preview')} 
-              frameBorder="0" 
-              allow="autoplay; fullscreen; picture-in-picture" 
-              allowFullScreen 
+              src="ลิงก์วิดีโอของคุณ (เอามาใส่ตรงนี้)" 
+    style={{ 
+      width: '100%', 
+      height: '100%', 
+      border: 'none' 
+    }} 
+    allow="autoplay"
+    allowFullScreen 
             />
           </div>
         </div>
