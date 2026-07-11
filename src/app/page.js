@@ -207,6 +207,8 @@ export default function Home() {
                   </div>
                   <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.05)', margin: '1.5rem 0' }} />
                   <div className="contact-list" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', fontSize: '0.9rem', color: '#788b81' }}>
+                    <div>👤 <strong>อายุ:</strong> <span style={{ color: '#fff' }}>21 ปี</span></div>
+                    <div>📏 <strong>ส่วนสูง / น้ำหนัก:</strong> <span style={{ color: '#fff' }}>170 cm / 54 kg</span></div>
                     <div>📞 <strong>เบอร์โทร:</strong> <span style={{ color: '#fff' }}>0982478849</span></div>
                     <div>✉️ <strong>อีเมล:</strong> <span style={{ color: '#fff' }}>chonlasit2004@gmail.com</span></div>
                     <div>📍 <strong>พื้นที่รับงาน:</strong> <span style={{ color: '#fff' }}>นนทบุรี, กรุงเทพฯ</span></div>
